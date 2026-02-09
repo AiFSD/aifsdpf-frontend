@@ -1,0 +1,24 @@
+.tile {
+    background: #333;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* sizes */
+.rt {
+    width: 260px;
+    height: 130px;
+}
+
+.sr {
+    width: 130px;
+    height: 260px;
+}
+
+.ss {
+    width: 130px;
+    height: 130px;
+}

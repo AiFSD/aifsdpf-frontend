@@ -1,0 +1,40 @@
+@import "./tiles.css";
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #222;
+}
+
+.scroll-area {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.tile {
+    background: #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rt {
+    width: 240px;
+    height: 120px;
+}
+
+.scroll-area {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    overflow-x: auto;
+}
