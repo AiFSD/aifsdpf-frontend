@@ -1,40 +1,98 @@
 @import "./tiles.css";
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
 }
 
+/* Top bar */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background: #222;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: #222;
+  align-items: center;
 }
 
+/* Main viewport area */
+.dashboard-wrapper {
+  height: calc(100vh - 70px);
+  overflow: hidden;
+}
+
+/* Horizontal pages */
 .scroll-area {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
+  height: 100%;
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+}
+.scroll-area::-webkit-scrollbar { display: none; }
+
+/* One Metro screen */
+.panel {
+  flex: 0 0 100%;
+  max-width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  grid-template-areas:
+    "about about skills featured"
+    "fullstack fullstack skills api"
+    "frontend backend education api";
 }
 
-.tile {
-    background: #444;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Panel 2 layout */
+.panel.panel-2 {
+  grid-template-areas:
+    "resume resume github contact"
+    "demos tools github contact"
+    "certs certs testimonials testimonials";
 }
 
-.rt {
-    width: 240px;
-    height: 120px;
-}
+/* Map tiles to areas */
+.area-about { grid-area: about; }
+.area-featured { grid-area: featured; }
+.area-frontend { grid-area: frontend; }
+.area-backend { grid-area: backend; }
+.area-fullstack { grid-area: fullstack; }
+.area-skills { grid-area: skills; }
+.area-api { grid-area: api; }
+.area-education { grid-area: education; }
 
-.scroll-area {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    overflow-x: auto;
+.area-resume { grid-area: resume; }
+.area-contact { grid-area: contact; }
+.area-github { grid-area: github; }
+.area-demos { grid-area: demos; }
+.area-tools { grid-area: tools; }
+.area-certs { grid-area: certs; }
+.area-testimonials { grid-area: testimonials; }
+
+/* Responsive */
+@media (max-width: 992px) {
+  .panel {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas: none; /* (optional) simplifies on small screens */
+  }
 }

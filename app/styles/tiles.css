@@ -1,24 +1,37 @@
 .tile {
-    background: #333;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #fff;
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  transition: transform .25s ease, box-shadow .25s ease;
 }
 
-/* sizes */
-.rt {
-    width: 260px;
-    height: 130px;
+.tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.5);
 }
 
-.sr {
-    width: 130px;
-    height: 260px;
-}
+/* Metro gradients */
+.c-about { background: linear-gradient(135deg,#2563eb,#1e40af); }
+.c-featured { background: linear-gradient(135deg,#7c3aed,#4c1d95); }
+.c-frontend { background: linear-gradient(135deg,#059669,#065f46); }
+.c-backend { background: linear-gradient(135deg,#0ea5e9,#075985); }
+.c-fullstack { background: linear-gradient(135deg,#f97316,#9a3412); }
+.c-skills { background: linear-gradient(135deg,#a855f7,#6b21a8); }
+.c-api { background: linear-gradient(135deg,#22c55e,#15803d); }
+.c-education { background: linear-gradient(135deg,#64748b,#334155); }
+.c-resume { background: linear-gradient(135deg,#ef4444,#7f1d1d); }
+.c-contact { background: linear-gradient(135deg,#14b8a6,#0f766e); }
 
-.ss {
-    width: 130px;
-    height: 130px;
-}
+.c-demos { background: linear-gradient(135deg,#6366f1,#312e81); }
+.c-tools { background: linear-gradient(135deg,#f43f5e,#881337); }
+.c-certs { background: linear-gradient(135deg,#84cc16,#3f6212); }
+.c-github { background: linear-gradient(135deg,#334155,#0f172a); }
+.c-testimonials { background: linear-gradient(135deg,#eab308,#92400e); }
