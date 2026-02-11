@@ -24,5 +24,6 @@ export default function ScrollContainer({ children }) {
     <div ref={scrollRef} className="scroll-area">
       {children}
     </div>
+    
   );
 }

@@ -1,5 +1,7 @@
-import ScrollContainer from "./ScrollContainer";
+"use client";
 
+import { useState , useEffect } from "react";
+import ScrollContainer from "./ScrollContainer";
 import TileAbout from "./tiles/TileAbout";
 import TileFeatured from "./tiles/TileFeatured";
 import TileFrontend from "./tiles/TileFrontend";
@@ -18,30 +20,47 @@ import TileGithub from "./tiles/TileGithub";
 import TileTestimonials from "./tiles/TileTestimonials";
 
 export default function Dashboard() {
+  const [activeTile, setActiveTile] = useState(null);
+
+  const hasOpen = !!activeTile;
+
+useEffect(() => {
+  const onKeyDown = (e) => {
+    if (e.key === "Escape") setActiveTile(null);
+  };
+  window.addEventListener("keydown", onKeyDown);
+  return () => window.removeEventListener("keydown", onKeyDown);
+}, []);
+
+
   return (
     <div className="dashboard-wrapper">
-      <ScrollContainer>
+      <ScrollContainer >
+         <div
+    className={`overlay ${hasOpen ? "show" : ""}`}
+    onClick={() => setActiveTile(null)}
+  />
         {/* PANEL 1 */}
         <section className="panel">
-          <TileAbout />
-          <TileFeatured />
-          <TileFrontend />
-          <TileBackend />
-          <TileFullstack />
-          <TileSkills />
-          <TileAPI />
-          <TileEducation />
+          <TileAbout active={activeTile} setActive={setActiveTile} />
+          <TileFeatured active={activeTile} setActive={setActiveTile} />
+          <TileFrontend  active={activeTile} setActive={setActiveTile} />
+          <TileBackend  active={activeTile} setActive={setActiveTile}/>
+          <TileFullstack active={activeTile} setActive={setActiveTile}/>
+          <TileSkills active={activeTile} setActive={setActiveTile} />
+          <TileAPI active={activeTile} setActive={setActiveTile}/>
+          <TileEducation active={activeTile} setActive={setActiveTile}/>
         </section>
 
         {/* PANEL 2 */}
         <section className="panel panel-2">
-          <TileResume />
-          <TileContact />
-          <TileDemos />
-          <TileMiniTools />
-          <TileCertifications />
-          <TileGithub />
-          <TileTestimonials />
+          <TileResume active={activeTile} setActive={setActiveTile}/>
+          <TileContact active={activeTile} setActive={setActiveTile}/>
+          <TileDemos active={activeTile} setActive={setActiveTile}/>
+          <TileMiniTools active={activeTile} setActive={setActiveTile}/>
+          <TileCertifications active={activeTile} setActive={setActiveTile}/>
+          <TileGithub active={activeTile} setActive={setActiveTile}/>
+          <TileTestimonials active={activeTile} setActive={setActiveTile}/>
         </section>
       </ScrollContainer>
     </div>

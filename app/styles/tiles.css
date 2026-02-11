@@ -35,3 +35,81 @@
 .c-certs { background: linear-gradient(135deg,#84cc16,#3f6212); }
 .c-github { background: linear-gradient(135deg,#334155,#0f172a); }
 .c-testimonials { background: linear-gradient(135deg,#eab308,#92400e); }
+
+.tile{
+  cursor: pointer;
+  position: relative;
+}
+
+/* expanded tile */
+.tile-open{
+  position: fixed;
+  inset: 90px;
+  z-index: 999;
+
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+}
+
+/* blur background tiles */
+.panel:has(.tile-open) .tile:not(.tile-open){
+  filter: blur(6px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* --- Phase 3.3 polish --- */
+.tile {
+  cursor: pointer;
+}
+
+/* dark overlay when any tile open */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 800;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* open animation */
+.tile-open{
+  position: fixed;
+  inset: 80px;
+  z-index: 900;
+
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+
+  animation: popOpen .22s ease-out;
+}
+
+@keyframes popOpen {
+  from { transform: scale(.94); opacity: .6; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* close button */
+.close-btn{
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-size: 20px;
+  line-height: 38px;
+  cursor: pointer;
+}
+.close-btn:hover{
+  background: rgba(0,0,0,0.55);
+}
