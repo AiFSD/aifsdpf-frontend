@@ -12,16 +12,17 @@ import TileAPI from "./tiles/TileAPI";
 import TileEducation from "./tiles/TileEducation";
 import TileResume from "./tiles/TileResume";
 import TileContact from "./tiles/TileContact";
-
+import { useScrollCtx } from "./ScrollContext";
 import TileDemos from "./tiles/TileDemos";
 import TileMiniTools from "./tiles/TileMiniTools";
 import TileCertifications from "./tiles/TileCertifications";
 import TileGithub from "./tiles/TileGithub";
 import TileTestimonials from "./tiles/TileTestimonials";
 
+
 export default function Dashboard() {
   const [activeTile, setActiveTile] = useState(null);
-
+  const { scrollLeft, scrollRight, atStart, atEnd } = useScrollCtx();
   const hasOpen = !!activeTile;
 
 useEffect(() => {
@@ -51,7 +52,7 @@ useEffect(() => {
           <TileAPI active={activeTile} setActive={setActiveTile}/>
           <TileEducation active={activeTile} setActive={setActiveTile}/>
         </section>
-
+  
         {/* PANEL 2 */}
         <section className="panel panel-2">
           <TileResume active={activeTile} setActive={setActiveTile}/>
@@ -61,7 +62,9 @@ useEffect(() => {
           <TileCertifications active={activeTile} setActive={setActiveTile}/>
           <TileGithub active={activeTile} setActive={setActiveTile}/>
           <TileTestimonials active={activeTile} setActive={setActiveTile}/>
+          
         </section>
+    
       </ScrollContainer>
     </div>
   );

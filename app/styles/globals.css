@@ -1,51 +1,56 @@
 @import "./tiles.css";
 
-html, body {
+
+:root{
+  --app-pad: 24px;        /* whole app padding */
+  --nav-bottom: 39px;     /* arrows distance from bottom */
+}
+
+html, body{
   height: 100%;
   margin: 0;
 }
 
-body {
+body{
+  padding: var(--app-pad);
+  box-sizing: border-box;
   overflow: hidden;
-  font-family: Arial, sans-serif;
   background: #111;
   color: #fff;
+  font-family: Arial, sans-serif;
 }
 
-/* Top bar */
-.navbar {
-  height: 70px;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background: #222;
-  align-items: center;
-}
-
-/* Main viewport area */
-.dashboard-wrapper {
-  height: calc(100vh - 70px);
+/* =========================
+   Dashboard sizing
+   (content fits INSIDE body padding)
+   ========================= */
+.dashboard-wrapper{
+  height: calc(100vh - (var(--app-pad) * 2));
   overflow: hidden;
 }
 
-/* Horizontal pages */
-.scroll-area {
+/* =========================
+   Horizontal pages / panels
+   ========================= */
+.scroll-area{
   height: 100%;
   display: flex;
   gap: 14px;
-  padding: 14px;
+
+  /* keep metro side padding, keep a small bottom breathing space */
+  padding: 20px 28px 12px 28px;
+
   overflow-x: auto;
   overflow-y: hidden;
- padding: 20px 28px ;
+
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
 
   scrollbar-width: none;
 }
-.scroll-area::-webkit-scrollbar { display: none; }
+.scroll-area::-webkit-scrollbar{ display: none; }
 
-/* One Metro screen */
-.panel {
+.panel{
   flex: 0 0 100%;
   max-width: 100%;
   height: 100%;
@@ -62,15 +67,14 @@ body {
     "frontend backend education api";
 }
 
-/* Panel 2 layout */
-.panel.panel-2 {
+.panel.panel-2{
   grid-template-areas:
     "resume resume github contact"
     "demos tools github contact"
     "certs certs testimonials testimonials";
 }
 
-/* Map tiles to areas */
+/* Area mapping */
 .area-about { grid-area: about; }
 .area-featured { grid-area: featured; }
 .area-frontend { grid-area: frontend; }
@@ -79,7 +83,6 @@ body {
 .area-skills { grid-area: skills; }
 .area-api { grid-area: api; }
 .area-education { grid-area: education; }
-
 .area-resume { grid-area: resume; }
 .area-contact { grid-area: contact; }
 .area-github { grid-area: github; }
@@ -89,81 +92,119 @@ body {
 .area-testimonials { grid-area: testimonials; }
 
 /* Responsive */
-@media (max-width: 992px) {
-  .panel {
+@media (max-width: 992px){
+  .panel{
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    grid-template-areas: none; /* (optional) simplifies on small screens */
+    grid-template-areas: none;
   }
 }
 
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  padding: 14px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* =========================
+   Floating bottom arrows (Navbar reused)
+   ========================= */
+.navbar{
+  position: fixed !important;
+  left: 50%;
+  bottom: var(--nav-bottom);
+  transform: translateX(-50%);
+  z-index: 9999;
 
-  backdrop-filter: blur(14px);
-  background: linear-gradient(
-    180deg,
-    rgba(20,20,20,0.65),
-    rgba(20,20,20,0.35)
-  );
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  /* navbar should NOT look like a bar */
+  height: auto;
+  width: auto;
+  padding: 0;
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+
+  /* allow only buttons clickable */
+  pointer-events: none;
 }
 
-.nav-name {
-  font-size: 2.1rem;
-  font-weight: 200;
-  letter-spacing: 0.4px;
-  color: #fff;
-  opacity: 0.95;
-}
+/* Only keep the arrow buttons visible */
+.icon-btn:not(.arrow){ display: none; }
 
-.nav-actions {
+.nav-actions{
+  pointer-events: auto;
   display: flex;
   gap: 14px;
   align-items: center;
+  justify-content: center;
+
+  /* subtle pill behind buttons */
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.45);
 }
 
-/* Circular glass buttons */
-.icon-btn {
-  width: 38px;
-  height: 38px;
+/* Arrow buttons: BLACK transparent with WHITE arrow */
+.icon-btn.arrow{
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
+
   display: grid;
   place-items: center;
 
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.18);
 
-  color: white;
-  font-size: 0.95rem;
+  color: #fff;           /* white arrow */
+  font-size: 1.05rem;
   cursor: pointer;
 
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
 }
 
-.icon-btn:hover {
-  background: rgba(255,255,255,0.18);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.35);
+.icon-btn.arrow:hover{
+  background: rgba(0,0,0,0.70);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.45);
 }
 
-.icon-btn:disabled {
-  opacity: 0.35;
+.icon-btn.arrow:disabled{
+  opacity: 0.30;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-.arrow {
-  font-size: 0.9rem;
+
+/* lock grid height so tiles NEVER force rows bigger */
+.panel {
+  grid-template-rows: repeat(3, minmax(0, 1fr));  /* instead of 1fr */
 }
+
+.panel > * {
+  min-height: 0;   /* allow content to shrink */
+  min-width: 0;
+}
+.scroll-area{
+  padding: 0px 28px;
+  padding-bottom:18px; /* space for arrows */
+}
+/* =========================
+   Dashboard entry animation
+   ========================= */
+.dashboard-wrapper {
+  animation: dashboardEnter 0.6s ease-out both;
+}
+
+@keyframes dashboardEnter {
+  from {
+    opacity: 0;
+    transform: scale(5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.tile-open .tile-body {
+  margin-top: 60px;
+  max-width: 780px;
+}
+

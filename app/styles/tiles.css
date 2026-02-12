@@ -78,7 +78,7 @@
   pointer-events: auto;
 }
 
-/* open animation */
+/* expanded tile + open layout (single source of truth) */
 .tile-open{
   position: fixed;
   inset: 80px;
@@ -86,14 +86,32 @@
 
   border-radius: 18px;
   box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-
   animation: popOpen .22s ease-out;
+
+  /* OPEN = reading mode */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 14px;
+
+  /* important: stop closed-tile bottom alignment effects */
+  padding: 24px;          /* give proper breathing space */
+  overflow: auto;         /* allow long text */
 }
 
-@keyframes popOpen {
+.tile-open p{
+  line-height: 1.6;
+  font-weight: 400;
+  margin: 0;              /* consistent spacing, use gap instead */
+}
+
+@keyframes popOpen{
   from { transform: scale(.94); opacity: .6; }
   to   { transform: scale(1); opacity: 1; }
 }
+
+
 
 /* close button */
 .close-btn{
@@ -112,4 +130,123 @@
 }
 .close-btn:hover{
   background: rgba(0,0,0,0.55);
+}
+
+/* =========================
+   Windows Live Tile Flip
+   ========================= */
+
+/* only closed tiles flip */
+.tile-flip {
+  perspective: 900px;
+}
+
+/* container */
+.tile-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: tileFlip 4s infinite ease-in-out;
+}
+
+/* stop flip on hover */
+.tile:hover .tile-flip-inner {
+  animation-play-state: paused;
+}
+
+/* stop flip when tile is open */
+.tile-open .tile-flip-inner {
+  animation: none;
+}
+
+/* faces */
+.tile-face {
+  position: absolute;
+  inset: 0;
+  padding: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  backface-visibility: hidden;
+}
+
+/* back face */
+.tile-back {
+  transform: rotateY(180deg);
+  opacity: 0.95;
+}
+
+/* animation */
+@keyframes tileFlip {
+  0%, 45% {
+    transform: rotateY(0deg);
+  }
+  55%, 100% {
+    transform: rotateY(180deg);
+  }
+}
+/* =========================
+   Featured Resume Tile Flip
+   ========================= */
+
+.tile-featured-flip {
+  perspective: 900px;
+}
+
+.tile-featured-flip .tile-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: featuredFlip 3s infinite ease-in-out;
+}
+
+/* pause flip on hover */
+.tile-featured-flip:hover .tile-flip-inner {
+  animation-play-state: paused;
+}
+
+/* stop flip when open */
+.tile-open .tile-flip-inner {
+  animation: none;
+}
+
+/* faces */
+.tile-featured-flip .tile-face {
+  position: absolute;
+  inset: 0;
+  padding: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  backface-visibility: hidden;
+}
+
+.tile-featured-flip .tile-back {
+  transform: rotateY(180deg);
+}
+
+/* animation timing */
+@keyframes featuredFlip {
+  0%, 40% {
+    transform: rotateY(0deg);
+  }
+  60%, 100% {
+    transform: rotateY(180deg);
+  }
+}
+
+/* reset absolute-based module styles in open mode */
+.tile-open .title,
+.tile-open .sub {
+  position: static;
+  left: auto;
+  top: auto;
+  max-width: 100%;
+}
+.tile-open .about-content,
+.tile-open > div {
+  align-self: stretch;
 }
